@@ -377,12 +377,23 @@ function generateRickProfile(la) {
 
   var applicationCode = String.raw`\t${createApplicationId()}`;
 
-  var summaryText = foo`Dear ${la.ApplicantName}, <br> your application for ${
-    "$" + la.LoanAmount
-  }, ${reviewText}.<br>
+  var summaryText = highlighText`Dear ${
+    la.ApplicantName
+  }, <br> your application for ${"$" + la.LoanAmount}, ${reviewText}.<br>
     Your risk profile is ${riskProfile}.<br> Your unique application code is ${applicationCode}`;
 
   return summaryText;
+}
+
+function highlighText(strings, ...values) {
+  let string = "";
+  for (let i = 0; i < strings.length; i++) {
+    if (i > 0) {
+      string += `<b>${values[i - 1]}</b>`;
+    }
+    string += strings[i];
+  }
+  return string;
 }
 
 function createApplicationId() {
